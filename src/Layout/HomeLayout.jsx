@@ -3,6 +3,8 @@ import HeroSection from '../Home/HeroSection';
 import ProductCategory from '../Home/ProductCategory';
 import FeaturedProduct from '../Home/FeaturedProduct';
 import OfferBanner from '../Home/OfferBanner';
+import WhyChooseUs from '../Home/WhyChooseUs';
+import ReviewSection from '../Home/ReviewSection';
 
 const HomeLayout = () => {
     return (
@@ -11,6 +13,8 @@ const HomeLayout = () => {
             <ProductCategory />
             <FeaturedProduct />
             <OfferBanner />
+            <WhyChooseUs />
+            <ReviewSection />
         </div>
     );
 };
