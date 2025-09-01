@@ -5,6 +5,7 @@ import FeaturedProduct from '../Home/FeaturedProduct';
 import OfferBanner from '../Home/OfferBanner';
 import WhyChooseUs from '../Home/WhyChooseUs';
 import ReviewSection from '../Home/ReviewSection';
+import Register from '../Auth/Register';
 
 const HomeLayout = () => {
     return (
@@ -15,6 +16,7 @@ const HomeLayout = () => {
             <OfferBanner />
             <WhyChooseUs />
             <ReviewSection />
+            <Register/>
         </div>
     );
 };

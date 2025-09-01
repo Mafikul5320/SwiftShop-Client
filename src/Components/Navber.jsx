@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,10 +33,10 @@ const Navber = () => {
           </div>
 
           {/* User */}
-          <div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
+          <Link to={"/login"}><div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
             <FaUser className="text-xl" />
             <span className="hidden md:inline">Account</span>
-          </div>
+          </div></Link>
 
           {/* Mobile Menu Button */}
           <button
