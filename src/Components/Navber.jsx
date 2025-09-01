@@ -1,16 +1,28 @@
 import { useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 import { Link } from "react-router";
+import logo from '../assets/Logo.png'
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const axiosSucure = useAxiosSecure()
+
+  const { data: user, } = useQuery({
+    queryKey: ["User"],
+    queryFn: async () => {
+      const res = await axiosSucure.get("/all-user");
+      return res.data;
+    },
+  });
+  console.log(user)
 
   return (
     <nav className="w-full bg-gray-100 shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center w-11/13 mx-auto py-4">
-        <div className="text-2xl font-extrabold tracking-wide">
-          <span className="text-gray-800">Swift</span>
-          <span className="text-red-500">Shop</span>
+        <div className="text-2xl font-extrabold tracking-wide ">
+          <img className="w-52" src={logo} alt="" />
         </div>
 
         <div className="hidden md:flex flex-1 mx-8 max-w-xl">

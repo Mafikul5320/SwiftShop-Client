@@ -16,7 +16,6 @@ const HomeLayout = () => {
             <OfferBanner />
             <WhyChooseUs />
             <ReviewSection />
-            <Register/>
         </div>
     );
 };

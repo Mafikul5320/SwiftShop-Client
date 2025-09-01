@@ -1,4 +1,5 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import logo from '../assets/Logo.png'
 
 const Footer = () => {
   return (
@@ -6,10 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-10">
 
         <div>
-          <h1 className="text-3xl font-extrabold mb-4">
-            <span className="text-white">Swift</span>
-            <span className="text-[#08aec3]">Shop</span>
-          </h1>
+          <img className="w-52 mb-3" src={logo} alt="" />
           <p className="text-sm leading-6">
             SwiftShop is your one-stop destination for the latest products at
             the best prices. Shop smarter, faster, and better with us.

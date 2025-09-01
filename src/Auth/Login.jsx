@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaGoogle, FaEnvelope, FaLock } from "react-icons/fa";
-import { data } from 'react-router';
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import logo from '../assets/Logo.png'
+import { CircleX } from 'lucide-react';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 const Login = () => {
     const { handleSubmit, register, formState: { errors } } = useForm();
+    const axiosSecure = useAxiosSecure()
     const [loading, setLoading] = useState(false);
-    const onSubmit = (data) => { }
-    console.log(data)
+    const onSubmit = async (data) => {
+        const { email, password } = data;
+        const res = await axiosSecure.get(`/login?email=${email}&password=${password}`)
+        console.log(res.data.user)
+        console.log(res.data.token)
+        if (res?.data?.token) {
+            localStorage.setItem("token", res?.data?.token)
+        }
+    }
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#ece9ff] to-[#f5f0ff] p-6">
+        <div className="flex items-center justify-center bg-gradient-to-r from-[#08aec3]/10 via-white to-[#08aec3]/10 p-6 my-8">
             <div className="w-[30%] bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-10">
 
                 {/* Logo */}
-                <div className="flex justify-center py-2">
-                    <img className="h-17 w-17 rounded-lg" src={"logo"} alt="Logo" />
+                <div className="flex justify-center py-2 mb-8">
+                    <img className="w-42" src={logo} />
                 </div>
 
                 {/* Title */}
@@ -73,43 +84,6 @@ const Login = () => {
                         {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
-
-                {/* Social Login */}
-                {/* <div className="mt-8">
-          <p className="text-center text-gray-500 text-sm mb-4">Or login with</p>
-          <div className="flex flex-col gap-3">
-            <button onClick={handelLogin} className="flex items-center justify-center border border-gray-200 py-2 rounded-lg bg-white shadow-sm hover:shadow-md transition font-semibold">
-              <svg
-                aria-label="Google logo"
-                width="21"
-                height="21"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <g>
-                  <path d="m0 0H512V512H0" fill="#fff"></path>
-                  <path
-                    fill="#34a853"
-                    d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                  ></path>
-                  <path
-                    fill="#4285f4"
-                    d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                  ></path>
-                  <path
-                    fill="#fbbc02"
-                    d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                  ></path>
-                  <path
-                    fill="#ea4335"
-                    d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                  ></path>
-                </g>
-              </svg>
-              <span className="pl-1">Login with Google</span>
-            </button>
-          </div>
-        </div> */}
 
                 {/* Register Link */}
                 <p className="text-center text-sm mt-8 text-gray-600">
