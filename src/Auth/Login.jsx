@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import logo from '../assets/Logo.png'
 import { CircleX } from 'lucide-react';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
+import { AuthContext } from '../Context/AuthContext';
 
 const Login = () => {
     const { handleSubmit, register, formState: { errors } } = useForm();
-    const axiosSecure = useAxiosSecure()
+    const { Login } = use(AuthContext)
     const [loading, setLoading] = useState(false);
     const onSubmit = async (data) => {
         const { email, password } = data;
-        const res = await axiosSecure.get(`/login?email=${email}&password=${password}`)
-        console.log(res.data.user)
-        console.log(res.data.token)
-        if (res?.data?.token) {
-            localStorage.setItem("token", res?.data?.token)
-        }
+        Login(email, password)
     }
 
     return (

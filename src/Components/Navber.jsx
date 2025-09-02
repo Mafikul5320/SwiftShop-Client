@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 import { Link } from "react-router";
 import logo from '../assets/Logo.png'
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { AuthContext } from "../Context/AuthContext";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const axiosSucure = useAxiosSecure()
+  const { user } = use(AuthContext)
 
-  const { data: user, } = useQuery({
-    queryKey: ["User"],
-    queryFn: async () => {
-      const res = await axiosSucure.get("/all-user");
-      return res.data;
-    },
-  });
+  // const { data: user, } = useQuery({
+  //   queryKey: ["User"],
+  //   queryFn: async () => {
+  //     const res = await axiosSucure.get("/all-user");
+  //     return res.data;
+  //   },
+  // });
   console.log(user)
 
   return (
@@ -47,7 +49,7 @@ const Navber = () => {
           {/* User */}
           <Link to={"/login"}><div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
             <FaUser className="text-xl" />
-            <span className="hidden md:inline">Account</span>
+            {user? <button>Log Out</button>:<span className="hidden md:inline">Account</span>}
           </div></Link>
 
           {/* Mobile Menu Button */}
