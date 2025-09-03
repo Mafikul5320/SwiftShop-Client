@@ -3,6 +3,9 @@ import Root from "../Layout/Root";
 import HomeLayout from "../Layout/HomeLayout";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
+import Dashboard from "../Dashboard/Dashboard";
+import DashboardLayout from "../Dashboard/DashboardLayout";
+import AddProduct from "../Dashboard/Pages/AddProduct";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -20,5 +23,21 @@ export const Router = createBrowserRouter([{
             path: "/register",
             Component: Register
         }
+    ],
+},
+{
+    path: "/dashboard",
+    Component: Dashboard,
+    children: [
+        {
+            path: "/dashboard",
+            Component: DashboardLayout
+        },
+        {
+            path: "add-product",
+            Component: AddProduct
+        }
     ]
-}])
+}
+
+])

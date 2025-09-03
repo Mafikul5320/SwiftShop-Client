@@ -9,7 +9,7 @@ import { AuthContext } from "../Context/AuthContext";
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const axiosSucure = useAxiosSecure()
-  const { user } = use(AuthContext)
+  const { user, Logout } = use(AuthContext)
 
   // const { data: user, } = useQuery({
   //   queryKey: ["User"],
@@ -49,7 +49,7 @@ const Navber = () => {
           {/* User */}
           <Link to={"/login"}><div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
             <FaUser className="text-xl" />
-            {user? <button>Log Out</button>:<span className="hidden md:inline">Account</span>}
+            {user ? <button className="btn btn-error" onClick={Logout}>Log Out</button> : <span className="hidden md:inline">Account</span>}
           </div></Link>
 
           {/* Mobile Menu Button */}
@@ -64,7 +64,7 @@ const Navber = () => {
 
       <div className="bg-[#141b3b] text-white ">
         <div className="hidden md:flex items-center justify-center gap-8 py-3 text-sm font-semibold">
-          <span className="cursor-pointer hover:text-yellow-200 transition-colors">All Categories</span>
+          <Link to={"/"}><span className="cursor-pointer hover:text-yellow-200 transition-colors">Home</span></Link>
           <span className="cursor-pointer hover:text-yellow-200 transition-colors">Products</span>
           <span className="cursor-pointer hover:text-yellow-200 transition-colors">Blog</span>
           <span className="cursor-pointer hover:text-yellow-200 transition-colors">Contact</span>

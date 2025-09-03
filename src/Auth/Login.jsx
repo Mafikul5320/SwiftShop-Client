@@ -5,15 +5,28 @@ import logo from '../assets/Logo.png'
 import { CircleX } from 'lucide-react';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import { AuthContext } from '../Context/AuthContext';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
     const { handleSubmit, register, formState: { errors } } = useForm();
-    const { Login } = use(AuthContext)
+    const { Login } = use(AuthContext);
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-    const onSubmit = async (data) => {
-        const { email, password } = data;
-        Login(email, password)
-    }
+const onSubmit = async (data) => {
+  const { email, password } = data;
+
+  // আগে check করা ঠিক না, কারণ login এর পরেই user state সেট হবে
+  // if (user) { navigate("/") } এখানে কাজ করবে না
+
+  const success = await Login(email, password); 
+  console.log(success)
+
+  if (success) {
+    navigate("/");
+  } else {
+    alert("Invalid email or password");
+  }
+};
 
     return (
         <div className="flex items-center justify-center bg-gradient-to-r from-[#08aec3]/10 via-white to-[#08aec3]/10 p-6 my-8">
