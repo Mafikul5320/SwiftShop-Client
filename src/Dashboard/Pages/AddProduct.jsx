@@ -2,9 +2,12 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Upload, Package } from "lucide-react";
 import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AddProduct = () => {
-    const [previewImages, setPreviewImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState();
+    const axiosSucure = useAxiosSecure()
 
     const {
         register,
@@ -13,13 +16,26 @@ const AddProduct = () => {
         reset
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log("Product Data:", data);
-        alert("✅ Product Added Successfully!");
-        reset();
-        setPreviewImages([]);
-    };
+        const { product_name, slug, price, discount, stockStatus, categories, description } = data;
+        const product = {
+            product_name,
+            slug,
+            price,
+            discount,
+            stockStatus,
+            categories,
+            description,
+            product_img: previewImages,
+            date: new Date().toLocaleDateString()
+        }
+        const res = await axiosSucure.post("/product", product);
+        console.log(res.data)
 
+        // reset();
+    };
+    console.log(previewImages)
     const handleImagePreview = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -38,8 +54,14 @@ const AddProduct = () => {
             console.error("Image upload error:", err);
         }
     };
-
-    console.log(previewImages)
+    const { data: categories, } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await axiosSucure.get("/categories");
+            return res.data;
+        },
+    });
+    console.log(categories)
     return (
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
             {/* Title */}
@@ -55,7 +77,7 @@ const AddProduct = () => {
                     <input
                         type="text"
                         placeholder="Enter product name"
-                        {...register("name", { required: "Product name is required" })}
+                        {...register("product_name", { required: "Product name is required" })}
                         className="input input-bordered w-full"
                     />
                     {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
@@ -126,13 +148,20 @@ const AddProduct = () => {
                 {/* Categories */}
                 <div className="md:col-span-2">
                     <label className="block mb-2 font-medium">Categories</label>
-                    <input
-                        type="text"
-                        placeholder="e.g. Electronics, Mobile"
+                    <select
                         {...register("categories", { required: "Category is required" })}
-                        className="input input-bordered w-full"
-                    />
-                    {errors.categories && <p className="text-red-500 text-sm mt-1">{errors.categories.message}</p>}
+                        className="select select-bordered w-full"
+                    >
+                        <option value="">Select Category</option>
+                        {categories?.map((cat, i) => (
+                            <option key={i} value={cat?.name}>
+                                {cat?.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.categories && (
+                        <p className="text-red-500 text-sm mt-1">{errors.categories.message}</p>
+                    )}
                 </div>
 
                 {/* Description */}

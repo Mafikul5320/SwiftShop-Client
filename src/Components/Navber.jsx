@@ -11,13 +11,6 @@ const Navber = () => {
   const axiosSucure = useAxiosSecure()
   const { user, Logout } = use(AuthContext)
 
-  // const { data: user, } = useQuery({
-  //   queryKey: ["User"],
-  //   queryFn: async () => {
-  //     const res = await axiosSucure.get("/all-user");
-  //     return res.data;
-  //   },
-  // });
   console.log(user)
 
   return (
