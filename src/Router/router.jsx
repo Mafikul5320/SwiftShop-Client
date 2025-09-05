@@ -7,6 +7,8 @@ import Dashboard from "../Dashboard/Dashboard";
 import DashboardLayout from "../Dashboard/DashboardLayout";
 import AddProduct from "../Dashboard/Pages/AddProduct";
 import ProductDetails from "../Home/Product/ProductDetails";
+import AllUser from "../Dashboard/AllUser";
+import AllProducts from "../Dashboard/AllProducts";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -42,6 +44,14 @@ export const Router = createBrowserRouter([{
         {
             path: "add-product",
             Component: AddProduct
+        },
+        {
+            path: "all-user",
+            Component: AllUser
+        },
+        {
+            path: "all-product",
+            Component: AllProducts
         }
     ]
 }
