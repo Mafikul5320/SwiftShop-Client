@@ -76,7 +76,7 @@ const AllProducts = () => {
                                 {/* Stock */}
                                 <td className="px-6 py-4">
                                     {product?.stockStatus === "true" ? <span className="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">
-                                        In Stock 
+                                        In Stock
                                     </span> : <span className="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
                                         Out of Stock
                                     </span>}
@@ -95,10 +95,12 @@ const AllProducts = () => {
                                             <Eye size={16} />
                                         </button></Link>
                                         {/* Edit */}
-                                        <button className="p-2 rounded-full border border-gray-200 text-gray-600 
+                                        <Link to={`/dashboard/update-product/${product?._id}`}>
+                                            <button className="p-2 rounded-full border border-gray-200 text-gray-600 
                  hover:text-yellow-600 hover:border-yellow-300 hover:bg-yellow-50  transition shadow-sm" title="Edit">
-                                            <Pencil size={16} />
-                                        </button>
+                                                <Pencil size={16} />
+                                            </button>
+                                        </Link>
 
                                         {/* Delete */}
                                         <button className="p-2 rounded-full border border-gray-200 text-gray-600 hover:text-red-600 hover:border-red-300 hover:bg-red-50 transition shadow-sm"
