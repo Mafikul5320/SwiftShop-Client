@@ -12,21 +12,21 @@ const Login = () => {
     const { Login } = use(AuthContext);
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-const onSubmit = async (data) => {
-  const { email, password } = data;
+    const onSubmit = async (data) => {
+        const { email, password } = data;
 
-  // আগে check করা ঠিক না, কারণ login এর পরেই user state সেট হবে
-  // if (user) { navigate("/") } এখানে কাজ করবে না
+        // আগে check করা ঠিক না, কারণ login এর পরেই user state সেট হবে
+        // if (user) { navigate("/") } এখানে কাজ করবে না
 
-  const success = await Login(email, password); 
-  console.log(success)
+        const success = await Login(email, password);
+        console.log(success)
 
-  if (success) {
-    navigate("/");
-  } else {
-    alert("Invalid email or password");
-  }
-};
+        if (success) {
+            navigate("/");
+        } else {
+            alert("Invalid email or password");
+        }
+    };
 
     return (
         <div className="flex items-center justify-center bg-gradient-to-r from-[#08aec3]/10 via-white to-[#08aec3]/10 p-6 my-8">

@@ -1,18 +1,17 @@
-import { use, useState } from "react";
+import { use, useContext, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
+import { MdAddShoppingCart } from "react-icons/md";
 import { Link } from "react-router";
 import logo from '../assets/Logo.png'
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { AuthContext } from "../Context/AuthContext";
+import ShopCart from "./ShopCart";
+import { CartContext } from "../Context/CartProvider ";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const axiosSucure = useAxiosSecure()
-  const { user, Logout } = use(AuthContext)
-
-  console.log(user)
-
+  const { user, Logout } = use(AuthContext);
+  const { totalItems } = useContext(CartContext)
+  console.log(totalItems)
   return (
     <nav className="w-full bg-gray-100 shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center w-11/13 mx-auto py-4">
@@ -33,10 +32,20 @@ const Navber = () => {
 
         <div className="flex items-center gap-6">
           {/* Cart */}
-          <div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
-            <FaShoppingCart className="text-xl" />
-            <span className="hidden md:inline">Cart</span>
-            <span className="font-semibold text-red-500">$150.00</span>
+          <div className="drawer drawer-end">
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer-4" className="drawer-button ">          <div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
+                <div className="bg-[#08aec3] p-3 rounded-lg text-white hover:bg-[#077786] transition">
+                  <MdAddShoppingCart size={24} />
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                    { totalItems}
+                  </span>
+                </div>
+              </div></label>
+            </div>
+            <ShopCart></ShopCart>
           </div>
 
           {/* User */}

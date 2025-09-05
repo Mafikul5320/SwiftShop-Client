@@ -1,8 +1,9 @@
 import React from 'react';
 import { Heart, ShoppingCart, Share2 } from "lucide-react";
 import { useQuery } from '@tanstack/react-query';
-import { Rating } from 'react-simple-star-rating'; 
+import { Rating } from 'react-simple-star-rating';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { Link } from 'react-router';
 
 const FeaturedProduct = () => {
   const axiosSucure = useAxiosSecure();
@@ -25,7 +26,7 @@ const FeaturedProduct = () => {
           const discount = parseFloat(oneProduct?.discount) || 0;
           const finalPrice = (originalPrice - (originalPrice * discount / 100)).toFixed(2);
           const inStock = oneProduct?.stockStatus === "true";
-
+          console.log(oneProduct)
           return (
             <div key={oneProduct?._id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 group cursor-pointer relative">
               <div className="relative overflow-hidden rounded-xl">
@@ -55,9 +56,9 @@ const FeaturedProduct = () => {
 
               <div className="mt-4 space-y-2">
                 <p className="text-gray-500 text-sm font-medium">{oneProduct?.categories}</p>
-                <h3 className="text-base font-semibold text-[#0A2540] line-clamp-2 hover:text-cyan-500 transition hover:underline">
+                <Link to={`/product-details/${oneProduct?._id}`}><h3 className="text-base font-semibold text-[#0A2540] line-clamp-2 hover:text-cyan-500 transition hover:underline">
                   {oneProduct?.product_name}
-                </h3>
+                </h3></Link>
 
                 {/* Ratings */}
                 <div className="flex items-center">
@@ -78,9 +79,9 @@ const FeaturedProduct = () => {
 
                 {/* Price */}
                 <div className="flex items-center gap-2">
-                  <span className="text-[#0A2540] font-bold text-lg">${finalPrice}</span>
+                  <span className="text-[#0A2540] font-bold text-lg">{finalPrice} tk</span>
                   {discount > 0 && (
-                    <span className="text-gray-400 line-through text-sm">${originalPrice}</span>
+                    <span className="text-gray-400 line-through text-sm">{originalPrice} tk</span>
                   )}
                 </div>
 
@@ -90,6 +91,7 @@ const FeaturedProduct = () => {
                 </p>
               </div>
             </div>
+
           );
         })}
       </div>

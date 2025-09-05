@@ -6,7 +6,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const AddProduct = () => {
-    const [previewImages, setPreviewImages] = useState();
+    const [previewImages, setPreviewImages] = useState([]);
+
     const axiosSucure = useAxiosSecure()
 
     const {
@@ -17,8 +18,8 @@ const AddProduct = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log("Product Data:", data);
         const { product_name, slug, price, discount, stockStatus, categories, description } = data;
+
         const product = {
             product_name,
             slug,
@@ -29,17 +30,20 @@ const AddProduct = () => {
             description,
             product_img: previewImages,
             date: new Date().toLocaleDateString()
-        }
+        };
+
         const res = await axiosSucure.post("/product", product);
-        console.log(res.data)
-
-        // reset();
+        console.log(res.data);
     };
-    console.log(previewImages)
-    const handleImagePreview = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
 
+    console.log(previewImages)
+const handleImagePreview = async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    const uploadedImages = [];
+
+    for (let file of files) {
         const formData = new FormData();
         formData.append("image", file);
 
@@ -49,11 +53,15 @@ const AddProduct = () => {
                 formData
             );
 
-            setPreviewImages(upload.data.data.url);
+            uploadedImages.push(upload.data.data.url);
         } catch (err) {
             console.error("Image upload error:", err);
         }
-    };
+    }
+
+    setPreviewImages((prev) => [...prev, ...uploadedImages]);
+};
+
     const { data: categories, } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
@@ -190,15 +198,19 @@ const AddProduct = () => {
                     {errors.photos && <p className="text-red-500 text-sm mt-1">{errors.photos.message}</p>}
 
                     {/* Image Preview */}
-                    {previewImages && (
+                    {previewImages?.length > 0 && (
                         <div className="flex flex-wrap gap-3 mt-3">
-                            <img
-                                src={previewImages}
-                                alt="Preview"
-                                className="w-24 h-24 object-cover rounded-lg border"
-                            />
+                            {previewImages?.map((img, i) => (
+                                <img
+                                    key={i}
+                                    src={img}
+                                    alt={`Preview ${i}`}
+                                    className="w-24 h-24 object-cover rounded-lg border"
+                                />
+                            ))}
                         </div>
                     )}
+
 
                 </div>
 
