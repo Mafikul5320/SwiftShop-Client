@@ -11,6 +11,8 @@ import AllUser from "../Dashboard/AllUser";
 import AllProducts from "../Dashboard/AllProducts";
 import UpdateProduct from "../Dashboard/Pages/UpdateProduct";
 import ErrorPage from "../Pages/ErrorPage";
+import ForbiddenPage from "../Pages/ForbiddenPage";
+import AdminRoute from "../Private/AdminRoute";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -36,12 +38,16 @@ export const Router = createBrowserRouter([{
         {
             path: "*",
             Component: ErrorPage
+        },
+        {
+            path: "/forbidden",
+            Component: ForbiddenPage
         }
     ],
 },
 {
     path: "/dashboard",
-    Component: Dashboard,
+    element: <AdminRoute><Dashboard></Dashboard></AdminRoute>,
     children: [
         {
             path: "/dashboard",

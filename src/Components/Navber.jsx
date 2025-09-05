@@ -9,9 +9,8 @@ import { CartContext } from "../Context/CartProvider ";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, Logout } = use(AuthContext);
+  const { User, Logout } = use(AuthContext);
   const { totalItems } = useContext(CartContext)
-  console.log(totalItems)
   return (
     <nav className="w-full bg-gray-100 shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center w-11/13 mx-auto py-4">
@@ -51,7 +50,7 @@ const Navber = () => {
           {/* User */}
           <Link to={"/login"}><div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
             <FaUser className="text-xl" />
-            {user ? <button className="btn btn-error" onClick={Logout}>Log Out</button> : <span className="hidden md:inline">Account</span>}
+            {User ? <button className="btn btn-error" onClick={Logout}>Log Out</button> : <span className="hidden md:inline">Account</span>}
           </div></Link>
 
           {/* Mobile Menu Button */}

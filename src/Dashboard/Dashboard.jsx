@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation } from "react-router";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { BsBox } from "react-icons/bs";
 import logo from '../assets/Logo.png'
-import { Home, User, Settings, LogOut, Users } from "lucide-react";
+import { Home,  Settings, LogOut, Users } from "lucide-react";
 
 const Dashboard = () => {
   const location = useLocation();

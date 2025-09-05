@@ -4,7 +4,8 @@ import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
-  const [user, setUser] = useState(null);
+  const [User, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   const Login = async (email, password) => {
     try {
@@ -28,11 +29,9 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-
   const Logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    return
   };
 
   useEffect(() => {
@@ -40,6 +39,7 @@ const AuthProvider = ({ children }) => {
     if (token) {
       const fetchUser = async () => {
         try {
+          setLoading(true); 
           const profileRes = await axiosSecure.get("/user/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -47,16 +47,21 @@ const AuthProvider = ({ children }) => {
         } catch (err) {
           console.error("User fetch error:", err);
           setUser(null);
+        } finally {
+          setLoading(false); 
         }
       };
       fetchUser();
+    } else {
+      setLoading(false); 
     }
   }, [axiosSecure]);
 
   const UserInfo = {
     Login,
-    user,
-    Logout
+    User,
+    Logout,
+    loading 
   };
 
   return (
