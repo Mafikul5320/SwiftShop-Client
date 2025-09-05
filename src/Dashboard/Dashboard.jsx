@@ -48,9 +48,11 @@ const Dashboard = () => {
         <label htmlFor="dashboard-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
         <div className="w-72 min-h-full bg-white shadow-lg flex flex-col">
           {/* Logo / Branding */}
-          <div className="p-6 flex items-center gap-2 border-gray-300 border-b">
-            <img className="w-42" src={logo} />
-          </div>
+          <Link to={"/"}>
+            <div className="p-6 flex items-center gap-2 border-gray-300 border-b">
+              <img className="w-42" src={logo} />
+            </div>
+          </Link>
 
           {/* Menu */}
           <ul className="menu p-4 flex-1 text-gray-700 font-medium space-y-2">

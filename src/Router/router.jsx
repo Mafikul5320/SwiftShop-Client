@@ -10,6 +10,7 @@ import ProductDetails from "../Home/Product/ProductDetails";
 import AllUser from "../Dashboard/AllUser";
 import AllProducts from "../Dashboard/AllProducts";
 import UpdateProduct from "../Dashboard/Pages/UpdateProduct";
+import ErrorPage from "../Pages/ErrorPage";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -31,6 +32,10 @@ export const Router = createBrowserRouter([{
             path: "/product-details/:id",
             Component: ProductDetails
 
+        },
+        {
+            path: "*",
+            Component: ErrorPage
         }
     ],
 },

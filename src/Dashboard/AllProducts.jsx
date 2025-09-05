@@ -2,11 +2,12 @@ import React from "react";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const AllProducts = () => {
 
     const axiosSucure = useAxiosSecure();
+    const queryClient = useQueryClient();
 
     const { data: Products } = useQuery({
         queryKey: ["Products"],
@@ -15,6 +16,24 @@ const AllProducts = () => {
             return res.data;
         },
     });
+
+    const deleteMutation = useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosSucure.delete(`/deleteproduct/${id}`);
+            console.log(res.data)
+            return res.data;
+
+        },
+        onSuccess: () => {
+
+            queryClient.invalidateQueries(["products"]);
+        },
+    });
+
+    const handleDelete = (id) => {
+        deleteMutation.mutate(id)
+    }
+
     console.log(Products)
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
@@ -25,9 +44,9 @@ const AllProducts = () => {
                     <span className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full">
                         Total: {Products?.length}
                     </span>
-                    <button className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow">
+                    <Link to={"/dashboard/add-product"}><button className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow">
                         + Add Product
-                    </button>
+                    </button></Link>
                 </div>
             </div>
 
@@ -103,7 +122,7 @@ const AllProducts = () => {
                                         </Link>
 
                                         {/* Delete */}
-                                        <button className="p-2 rounded-full border border-gray-200 text-gray-600 hover:text-red-600 hover:border-red-300 hover:bg-red-50 transition shadow-sm"
+                                        <button onClick={() => handleDelete(product?._id)} className="p-2 rounded-full border border-gray-200 text-gray-600 hover:text-red-600 hover:border-red-300 hover:bg-red-50 transition shadow-sm"
                                             title="Delete"
                                         >
                                             <Trash2 size={16} />
