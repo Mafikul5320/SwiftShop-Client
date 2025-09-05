@@ -1,12 +1,60 @@
-# React + Vite
+# 🛍️ SwiftShop - E-commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SwiftShop is a modern full-stack E-commerce application built with React, Node.js, Express, and MongoDB.  
+It provides a smooth shopping experience for customers and a  dashboard for admins.
 
-Currently, two official plugins are available:
+**🔗 [Visit Live Site](https://swiftshop-client.vercel.app/)**
+## 🔑 Demo Admin Access  
+For testing admin panel, use the following credentials:  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Email: admin@gmail.com  
+- **Password: Admin@56#  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Features
+
+### 👤 User
+- 🔐 Authentication & Authorization (JWT + Firebase/Custom)
+- 🛒 Add to Cart / Remove from Cart (with localStorage persistence)
+- ❤️ Wishlist Management
+- 📦 Place Orders & Track Delivery
+- ⭐ Product Ratings & Reviews
+
+### 🛠️ Admin
+- ✏️ Update Product Details (with Image Upload via imgbb)
+- 🗑️ Manage Users 
+
+### ✨ Other
+- 🔍 Product Search & Filtering
+- 📱 Fully Responsive (Mobile + Tablet + Desktop)
+- 🎨 Modern UI with **Tailwind CSS + DaisyUI**
+- ⚡ Data Fetching with **TanStack Query**
+- 🔒 Secure API with Axios Interceptors
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- React.js (Vite)
+- Tailwind CSS + DaisyUI
+- React Router
+- React Hook Form
+- TanStack Query
+- Axios (with custom secure hook)
+- Lucide & React Icons
+
+**Backend:**
+- 🟢 Node.js + Express.js
+- 🍃 MongoDB 
+- 🔑 JWT Authentication
+- Multer / imgbb API for image upload
+
+**Deployment:**
+- ▲ Frontend: Vercel 
+- ▲ Backend: Vercel
+
+---
+
+
