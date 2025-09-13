@@ -4,6 +4,7 @@ import { Upload, Package } from "lucide-react";
 import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
     const [previewImages, setPreviewImages] = useState([]);
@@ -18,10 +19,11 @@ const AddProduct = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        const { product_name, slug, price, discount, stockStatus, categories, description } = data;
+        const { product_name, slug, price, discount, stockStatus, categories, description, rating } = data;
 
         const product = {
             product_name,
+            rating,
             slug,
             price,
             discount,
@@ -31,36 +33,45 @@ const AddProduct = () => {
             product_img: previewImages,
             date: new Date().toLocaleDateString()
         };
-
+        reset()
         const res = await axiosSucure.post("/product", product);
         console.log(res.data);
+        if (res.data.insertedId) {
+            Swal.fire({
+                icon: "success",
+                title: "Product Add Sucessfull",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            reset()
+        }
     };
 
     console.log(previewImages)
-const handleImagePreview = async (e) => {
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
+    const handleImagePreview = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
 
-    const uploadedImages = [];
+        const uploadedImages = [];
 
-    for (let file of files) {
-        const formData = new FormData();
-        formData.append("image", file);
+        for (let file of files) {
+            const formData = new FormData();
+            formData.append("image", file);
 
-        try {
-            const upload = await axios.post(
-                `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imagebb_key}`,
-                formData
-            );
+            try {
+                const upload = await axios.post(
+                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imagebb_key}`,
+                    formData
+                );
 
-            uploadedImages.push(upload.data.data.url);
-        } catch (err) {
-            console.error("Image upload error:", err);
+                uploadedImages.push(upload.data.data.url);
+            } catch (err) {
+                console.error("Image upload error:", err);
+            }
         }
-    }
 
-    setPreviewImages((prev) => [...prev, ...uploadedImages]);
-};
+        setPreviewImages((prev) => [...prev, ...uploadedImages]);
+    };
 
     const { data: categories, } = useQuery({
         queryKey: ["categories"],
@@ -69,7 +80,6 @@ const handleImagePreview = async (e) => {
             return res.data;
         },
     });
-    console.log(categories)
     return (
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
             {/* Title */}
@@ -154,7 +164,7 @@ const handleImagePreview = async (e) => {
                 </div>
 
                 {/* Categories */}
-                <div className="md:col-span-2">
+                <div className="md:col-span-1">
                     <label className="block mb-2 font-medium">Categories</label>
                     <select
                         {...register("categories", { required: "Category is required" })}
@@ -171,7 +181,23 @@ const handleImagePreview = async (e) => {
                         <p className="text-red-500 text-sm mt-1">{errors.categories.message}</p>
                     )}
                 </div>
-
+                {/* Rating */}
+                <div>
+                    <label className="block mb-2 font-medium">Rating</label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        {...register("rating", {
+                            valueAsNumber: true,
+                            min: { value: 0, message: "Rating must be at least 0" },
+                            max: { value: 5, message: "Rating must be a maximum of 5" },
+                        })}
+                        className="input input-bordered w-full"
+                    />
+                    {errors.rating && (
+                        <p className="text-red-500 text-sm mt-1">{errors.rating.message}</p>
+                    )}
+                </div>
                 {/* Description */}
                 <div className="md:col-span-2">
                     <label className="block mb-2 font-medium">Description</label>

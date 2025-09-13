@@ -4,29 +4,29 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("cart")) || [];
-    } catch {
-      return [];
-    }
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+
   const addToCart = (product, qty = 1) => {
     setCart((prev) => {
-      const index = prev.findIndex((i) => i._id === product._id);
+      const existing = prev.find((item) => item._id === product._id);
 
       const price = Number(product.price) || 0;
       const discount = Number(product.discount) || 0;
-      const final = price - (price * discount) / 100;
+      const finalPrice = +(price - (price * discount) / 100).toFixed(2);
 
-      if (index > -1) {
-        const copy = [...prev];
-        copy[index] = { ...copy[index], quantity: copy[index].quantity + qty };
-        return copy;
+      if (existing) {
+        return prev.map((item) =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + qty }
+            : item
+        );
       }
 
       return [
@@ -39,21 +39,25 @@ export const CartProvider = ({ children }) => {
             : product.product_img,
           price,
           discount,
-          finalPrice: Number(final.toFixed(2)),
+          finalPrice,
           quantity: qty,
         },
       ];
     });
   };
 
-  const removeFromCart = (id) =>
-    setCart((prev) => prev.filter((i) => i._id !== id));
+
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item._id !== id));
+  };
 
   const clearCart = () => setCart([]);
 
-  const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
-  console.log(totalItems)
-  const subtotal = cart.reduce((s, i) => s + i.finalPrice * i.quantity, 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.finalPrice * item.quantity,
+    0
+  );
 
   return (
     <CartContext.Provider

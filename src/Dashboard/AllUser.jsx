@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const AllUser = () => {
     const axiosSecure = useAxiosSecure();
@@ -27,7 +28,24 @@ const AllUser = () => {
     })
 
     const handelMakeAdmin = (id) => {
-        adminMake.mutate(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                adminMake.mutate(id)
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Make Admin Successfull",
+                    icon: "success"
+                });
+            }
+        });
     }
 
     return (
@@ -101,8 +119,8 @@ const AllUser = () => {
 
                                     {/* Actions */}
                                     <td className="px-6 py-4">
-                                        {isAdmin ? (
-                                            <span className="text-gray-400 text-sm">Already Admin</span>
+                                        {oneUser?.role === "admin" ? (
+                                            <span className="px-4 py-1 text-sm text-white bg-gray-400 rounded hover:bg-gray-500 transition">Already Admin</span>
                                         ) : (
                                             <button onClick={() => handelMakeAdmin(oneUser?._id)} className="px-4 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 transition">
                                                 Make Admin

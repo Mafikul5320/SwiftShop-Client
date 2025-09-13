@@ -13,6 +13,10 @@ import UpdateProduct from "../Dashboard/Pages/UpdateProduct";
 import ErrorPage from "../Pages/ErrorPage";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import AdminRoute from "../Private/AdminRoute";
+import ContactPage from "../Pages/ContactPage";
+import ComingSoon from "../Pages/ComingSoon";
+import AllProduct from "../Pages/AllProduct";
+import CategoryProduct from "../Pages/CategoryProduct";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -42,6 +46,22 @@ export const Router = createBrowserRouter([{
         {
             path: "/forbidden",
             Component: ForbiddenPage
+        },
+        {
+            path: "/contact",
+            Component: ContactPage
+        },
+        {
+            path: "/ComingSoon",
+            Component: ComingSoon
+        },
+        {
+            path: "/all-product",
+            Component: AllProduct
+        },
+        {
+            path: "/category-product/:name",
+            Component: CategoryProduct
         }
     ],
 },

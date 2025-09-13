@@ -5,7 +5,7 @@ import useAxiosSecure from '../Hooks/useAxiosSecure';
 const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
   const [User, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const Login = async (email, password) => {
     try {
@@ -13,19 +13,21 @@ const AuthProvider = ({ children }) => {
 
       if (!res?.data?.token) {
         return false;
+      } else {
+        setUser(res?.data);
       }
 
       localStorage.setItem("token", res.data.token);
 
-      const profileRes = await axiosSecure.get(`/user/profile`, {
-        headers: { Authorization: `Bearer ${res.data.token}` },
-      });
-      setUser(profileRes.data);
+      // const profileRes = await axiosSecure.get(`/user/profile`, {
+      //   headers: { Authorization: `Bearer ${res.data.token}` },
+      // });
+      // setUser(profileRes.data);
 
-      return true; 
+      return true;
     } catch (error) {
       console.error("Login failed:", error);
-      return false; 
+      return false;
     }
   };
 
@@ -39,7 +41,7 @@ const AuthProvider = ({ children }) => {
     if (token) {
       const fetchUser = async () => {
         try {
-          setLoading(true); 
+          setLoading(true);
           const profileRes = await axiosSecure.get("/user/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -48,12 +50,12 @@ const AuthProvider = ({ children }) => {
           console.error("User fetch error:", err);
           setUser(null);
         } finally {
-          setLoading(false); 
+          setLoading(false);
         }
       };
       fetchUser();
     } else {
-      setLoading(false); 
+      setLoading(false);
     }
   }, [axiosSecure]);
 
@@ -61,7 +63,7 @@ const AuthProvider = ({ children }) => {
     Login,
     User,
     Logout,
-    loading 
+    loading
   };
 
   return (

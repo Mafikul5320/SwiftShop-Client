@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Heart, ShoppingCart, Share2 } from "lucide-react";
 import { useQuery } from '@tanstack/react-query';
 import { Rating } from 'react-simple-star-rating';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { Link } from 'react-router';
+import { CartContext } from '../../Context/CartProvider ';
 
 const FeaturedProduct = () => {
   const axiosSucure = useAxiosSecure();
+  const { addToCart } = useContext(CartContext)
 
   const { data: Products } = useQuery({
     queryKey: ["Products"],
@@ -20,7 +22,7 @@ const FeaturedProduct = () => {
     <div className='w-11/13 mx-auto my-4'>
       <h1 className='text-3xl font-bold'>Featured Product</h1>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 p-6">
-        {Products?.map(oneProduct => {
+        {Products?.slice(0, 10)?.map(oneProduct => {
           // price calculation with discount
           const originalPrice = parseFloat(oneProduct?.price);
           const discount = parseFloat(oneProduct?.discount) || 0;
@@ -42,10 +44,10 @@ const FeaturedProduct = () => {
                 )}
 
                 <div className="absolute inset-0 flex flex-col items-end justify-center gap-3 pr-3 opacity-0 group-hover:opacity-100 transition duration-300">
-                  <button className="bg-cyan-500 text-white p-2 rounded-full shadow hover:bg-cyan-600 transition transform hover:scale-110">
+                  <button onClick={() => addToCart(oneProduct, 1)} className="bg-cyan-500 text-white p-2 rounded-full shadow hover:bg-cyan-600 transition transform hover:scale-110">
                     <ShoppingCart size={18} />
                   </button>
-                  <button className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">
+                  <button  className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">
                     <Heart size={18} />
                   </button>
                   <button className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">
