@@ -21,7 +21,7 @@ const FeaturedProduct = () => {
   return (
     <div className='w-11/13 mx-auto my-4'>
       <h1 className='text-3xl font-bold'>Featured Product</h1>
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 p-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 py-8">
         {Products?.slice(0, 10)?.map(oneProduct => {
           // price calculation with discount
           const originalPrice = parseFloat(oneProduct?.price);
