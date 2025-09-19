@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaTshirt, FaLaptop, FaCouch, FaMobileAlt, FaHeart, FaGem } from "react-icons/fa";
+import { IoCameraSharp, IoGameController } from "react-icons/io5";
+import { PiTelevisionBold } from "react-icons/pi";
+import { ImHeadphones } from "react-icons/im";
+import { FaComputer } from "react-icons/fa6";
+import { BsWatch } from "react-icons/bs";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { Link } from "react-router";
 
@@ -14,20 +19,22 @@ const ProductCategory = () => {
     });
 
     const categoryIcons = [
-        <FaTshirt />,
-        <FaLaptop />,
-        <FaCouch />,
         <FaMobileAlt />,
-        <FaHeart />,
-        <FaGem />,
+        <FaLaptop />,
+        <IoCameraSharp />,
+        <BsWatch />,
+        <IoGameController />,
+        <PiTelevisionBold />,
+        <FaComputer />,
+        <ImHeadphones />
     ];
 
     return (
         <section className="py-12 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="w-11/13 mx-auto px-6">
                 {/* Title */}
                 <div className="py-4">
-                    <h2 className="text-4xl font-extrabold text-gray-800 text-center">
+                    <h2 className="text-5xl font-extrabold text-gray-800 text-center">
                         Featured <span className="text-[#08aec3]">Categories</span>
                     </h2>
                     <p className="text-center text-sm py-2">
@@ -36,7 +43,7 @@ const ProductCategory = () => {
                 </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-6">
                     {categories?.map((cat, index) => (
                         <Link key={index} to={`/category-product/${cat?.name}`}>
                             <div className="flex flex-col items-center bg-white shadow-md rounded-xl p-6 cursor-pointer 

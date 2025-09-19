@@ -28,7 +28,6 @@ const FeaturedProduct = () => {
           const discount = parseFloat(oneProduct?.discount) || 0;
           const finalPrice = (originalPrice - (originalPrice * discount / 100)).toFixed(2);
           const inStock = oneProduct?.stockStatus === "true";
-          console.log(oneProduct)
           return (
             <div key={oneProduct?._id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 group cursor-pointer relative">
               <div className="relative overflow-hidden rounded-xl">
@@ -89,7 +88,7 @@ const FeaturedProduct = () => {
 
                 {/* Stock Status */}
                 <p className={`text-sm font-medium ${inStock ? "text-green-600" : "text-red-600"}`}>
-                  {inStock ? "In Stock" : "Out of Stock"}
+                  {inStock ? "In Stock" : "Out of Stock"} ({oneProduct?.quantity})
                 </p>
               </div>
             </div>

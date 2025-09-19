@@ -152,6 +152,19 @@ const AddProduct = () => {
                     </select>
                     {errors.stockStatus && <p className="text-red-500 text-sm mt-1">Stock status is required</p>}
                 </div>
+                {/* Quantity */}
+                <div>
+                    <label className="block mb-2 font-medium">Quantity</label>
+                    <input
+                        type="number"
+                        placeholder="0"
+                        {...register("quantity", {
+                            min: { value: 0, message: "Quantity cannot be negative" }
+                        })}
+                        className="input input-bordered w-full"
+                    />
+                    {errors.discount && <p className="text-red-500 text-sm mt-1">{errors.discount.message}</p>}
+                </div>
 
                 {/* Status */}
                 <div>
@@ -186,6 +199,7 @@ const AddProduct = () => {
                     <label className="block mb-2 font-medium">Rating</label>
                     <input
                         type="number"
+                        placeholder="0.0"
                         step="0.1"
                         {...register("rating", {
                             valueAsNumber: true,
