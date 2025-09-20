@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 
 const axiosInstance = axios.create({
-    baseURL: "https://swiftshop-server-gamma.vercel.app"
+    baseURL: "http://localhost:3000"
 });
 const useAxiosSecure = () => {
     const token = localStorage.getItem("token");
@@ -12,6 +12,7 @@ const useAxiosSecure = () => {
         }
         return config;
     });
+    // https://swiftshop-server-gamma.vercel.app
 
     // // Response interceptor
     // axiosInstance.interceptors.response.use(

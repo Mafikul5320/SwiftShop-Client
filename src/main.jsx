@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-query'
 import { CartProvider } from './Context/CartProvider '
 import AuthProvider from './Context/AuthProvider'
+import FavoriteProvider from './Context/FavoriteProvider'
 
 const queryClient = new QueryClient()
 
@@ -18,8 +19,10 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <CartProvider>
-          <RouterProvider router={Router}>
-          </RouterProvider>
+          <FavoriteProvider>
+            <RouterProvider router={Router}>
+            </RouterProvider>
+          </FavoriteProvider>
         </CartProvider>
       </QueryClientProvider>
     </AuthProvider>

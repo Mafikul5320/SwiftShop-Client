@@ -5,10 +5,12 @@ import { Heart, ShoppingCart, Share2 } from "lucide-react";
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { CartContext } from '../Context/CartProvider ';
+import { FavoriteContext } from '../Context/FavoriteProvider';
 
 const AllProduct = () => {
     const axiosSucure = useAxiosSecure();
     const { addToCart } = useContext(CartContext)
+    const { addFavorite } = useContext(FavoriteContext)
 
     const { data: Products } = useQuery({
         queryKey: ["Products"],
@@ -49,7 +51,7 @@ const AllProduct = () => {
                                     <button onClick={() => addToCart(oneProduct, 1)} className="bg-cyan-500 text-white p-2 rounded-full shadow hover:bg-cyan-600 transition transform hover:scale-110">
                                         <ShoppingCart size={18} />
                                     </button>
-                                    <button className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">
+                                    <button onClick={() => addFavorite(oneProduct, 1)} className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">
                                         <Heart size={18} />
                                     </button>
                                     <button className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110">

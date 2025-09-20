@@ -5,6 +5,7 @@ import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import Swal from "sweetalert2";
 
 const UpdateProduct = () => {
     const [previewImages, setPreviewImages] = useState([]);
@@ -73,14 +74,16 @@ const UpdateProduct = () => {
     };
 
     const onSubmit = async (data) => {
-        const { product_name, slug, price, discount, stockStatus, categories, description, status } = data;
+        const { product_name, slug, price, discount, stockStatus, categories, description, status, rating, quantity } = data;
 
         const updatedProduct = {
             product_name,
             slug,
             price,
+            rating,
             discount,
             stockStatus,
+            quantity: Number(quantity),
             categories,
             description,
             status,
@@ -90,7 +93,14 @@ const UpdateProduct = () => {
         console.log(updatedProduct)
         try {
             const res = await axiosSecure.put(`/updateproduct/${id}`, updatedProduct);
-            console.log("Updated Product:", res.data);
+            console.log("Updated Product:", res.data.result.modifiedCount);
+            if (res.data.result.modifiedCount) {
+                Swal.fire({
+                    title: "Product update sucessfull",
+                    icon: "success",
+                    draggable: true
+                });
+            }
         } catch (err) {
             console.error("Update failed:", err);
         }
@@ -158,7 +168,19 @@ const UpdateProduct = () => {
                         <option value="false">Out of Stock</option>
                     </select>
                 </div>
-
+                {/* Quantity */}
+                <div>
+                    <label className="block mb-2 font-medium">Quantity</label>
+                    <input
+                        type="number"
+                        placeholder="0"
+                        {...register("quantity", {
+                            min: { value: 0, message: "Quantity cannot be negative" }
+                        })}
+                        className="input input-bordered w-full"
+                    />
+                    {errors.discount && <p className="text-red-500 text-sm mt-1">{errors.discount.message}</p>}
+                </div>
                 {/* Status */}
                 <div>
                     <label className="block mb-2 font-medium">Product Status</label>
@@ -172,7 +194,6 @@ const UpdateProduct = () => {
                 <div>
                     <label className="block mb-2 font-medium">Categories</label>
                     <select {...register("categories", { required: "Category is required" })} className="select select-bordered w-full">
-                        <option value="">Select Category</option>
                         {
                             categories?.map(cate => (<option key={cate?._id} value={cate?.name}>{cate?.name}</option>))
                         }
@@ -183,7 +204,7 @@ const UpdateProduct = () => {
                     <label className="block mb-2 font-medium">Rating</label>
                     <input
                         type="number"
-                        step="0.1" 
+                        step="0.1"
                         {...register("rating", {
                             valueAsNumber: true,
                             min: { value: 0, message: "Rating must be at least 0" },
@@ -229,8 +250,8 @@ const UpdateProduct = () => {
                 </div>
 
                 {/* Submit */}
-                <div className="md:col-span-2 flex justify-end">
-                    <button type="submit" className="btn btn-success px-6">
+                <div className="md:col-span-2 flex justify-end ">
+                    <button type="submit" className="btn btn-success px-6 text-white font-bold">
                         <Upload className="w-5 h-5 mr-2" /> Update Product
                     </button>
                 </div>

@@ -1,21 +1,23 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { FaSearch, FaUser, FaBars } from "react-icons/fa";
+import { FaSearch, FaUser, FaBars, FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdAddShoppingCart } from "react-icons/md";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 import logo from "../assets/Logo.png";
 import { AuthContext } from "../Context/AuthContext";
 import ShopCart from "./ShopCart";
 import { CartContext } from "../Context/CartProvider ";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { FavoriteContext } from "../Context/FavoriteProvider";
 
 const Navber = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { User, Logout } = useContext(AuthContext); 
+  const { User, Logout } = useContext(AuthContext);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const searchRef = useRef(null);
   const [data, setData] = useState([]);
   const { totalItems } = useContext(CartContext);
+  const { favoriteItems } = useContext(FavoriteContext);
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Navber = () => {
       try {
         const res = await axiosSecure.get(`/search?search=${search}`);
         setData(res?.data || []);
-        setOpen(true); 
+        setOpen(true);
       } catch (error) {
         console.log(error);
       }
@@ -84,7 +86,7 @@ const Navber = () => {
                 <Link
                   to={`/product-details/${product._id}`}
                   key={product._id}
-                  className="flex items-center gap-3 p-3 hover:bg-gray-100 cursor-pointer"
+                  className="flex border-b-gray-300 border-b items-center gap-3 p-3 hover:bg-gray-100 cursor-pointer"
                   onClick={() => setOpen(false)}
                 >
                   <img
@@ -98,7 +100,7 @@ const Navber = () => {
 
               {/* View All Results */}
               <Link
-                to={`/all-product`} 
+                to={`/all-product`}
                 className="block text-center py-2 border-t text-[#08aec3] font-semibold cursor-pointer hover:bg-gray-50"
                 onClick={() => setOpen(false)}
               >
@@ -109,13 +111,13 @@ const Navber = () => {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-3 sm:gap-4 md:gap-6 mt-3 md:mt-0">
+        <div className="flex items-center  sm:gap-4 mt-3 md:mt-0">
           {/* Cart */}
           <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               <label htmlFor="my-drawer-4" className="drawer-button">
-                <div className="flex items-center gap-2 cursor-pointer hover:text-red-500 transition-colors">
+                <div className="flex items-center space-x-6 cursor-pointer hover:text-red-500 transition-colors">
                   <div className="bg-[#08aec3] relative p-3 rounded-lg text-white hover:bg-[#077786] transition">
                     <MdAddShoppingCart size={22} />
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
@@ -126,6 +128,12 @@ const Navber = () => {
               </label>
             </div>
             <ShopCart />
+          </div>
+          <div className="bg-[#08aec3] relative p-3 rounded-lg text-white hover:bg-[#077786] transition">
+            <FaRegHeart size={22} />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
+              {favoriteItems}
+            </span>
           </div>
 
           {/* User Avatar */}
