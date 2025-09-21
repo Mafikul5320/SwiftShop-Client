@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaSearch, FaUser, FaBars, FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdAddShoppingCart } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import logo from "../assets/Logo.png";
 import { AuthContext } from "../Context/AuthContext";
 import ShopCart from "./ShopCart";
@@ -19,6 +19,7 @@ const Navber = () => {
   const { totalItems } = useContext(CartContext);
   const { favoriteItems } = useContext(FavoriteContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!search) {
@@ -129,7 +130,7 @@ const Navber = () => {
             </div>
             <ShopCart />
           </div>
-          <div className="bg-[#08aec3] relative p-3 rounded-lg text-white hover:bg-[#077786] transition">
+          <div onClick={() =>navigate("/favorite-items")} className="bg-[#08aec3] cursor-pointer relative p-3 rounded-lg text-white hover:bg-[#077786] transition">
             <FaRegHeart size={22} />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">
               {favoriteItems}

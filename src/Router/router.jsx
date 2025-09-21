@@ -17,6 +17,7 @@ import ContactPage from "../Pages/ContactPage";
 import ComingSoon from "../Pages/ComingSoon";
 import AllProduct from "../Pages/AllProduct";
 import CategoryProduct from "../Pages/CategoryProduct";
+import FavoriteItems from "../Pages/FavoriteItems";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -62,6 +63,10 @@ export const Router = createBrowserRouter([{
         {
             path: "/category-product/:name",
             Component: CategoryProduct
+        },
+        {
+            path: "/favorite-items",
+            Component: FavoriteItems
         }
     ],
 },
