@@ -47,8 +47,6 @@ const FeaturedProduct = () => {
           const discount = parseFloat(oneProduct?.discount) || 0;
           const finalPrice = (originalPrice - (originalPrice * discount / 100)).toFixed(2);
           const inStock = oneProduct?.stockStatus === "true";
-          const url = `${window.location.origin}/product-details/${oneProduct._id}`;
-
           return (
             <div key={oneProduct?._id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 group cursor-pointer relative">
               <div className="relative overflow-hidden rounded-xl">
@@ -93,7 +91,7 @@ const FeaturedProduct = () => {
                   {/* Share */}
                   <button
                     onClick={() => setShareProduct(oneProduct)}
-                    className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 transition transform hover:scale-110"
+                    className="bg-white text-cyan-500 p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer transition transform hover:scale-110"
                   >
                     <Share2 size={18} />
                   </button>
@@ -198,7 +196,7 @@ const FeaturedProduct = () => {
             {/* Close Button */}
             <button
               onClick={() => setShareProduct(null)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute cursor-pointer top-3 right-3 text-gray-500 hover:text-gray-700"
             >
               ✕
             </button>

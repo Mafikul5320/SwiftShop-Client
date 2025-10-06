@@ -31,7 +31,7 @@ const ProductCategory = () => {
 
     return (
         <section className="py-12 bg-gray-50">
-            <div className="w-11/13 mx-auto px-6">
+            <div className="w-11/13 mx-auto ">
                 {/* Title */}
                 <div className="py-4">
                     <h2 className="text-5xl font-extrabold text-gray-800 text-center">
@@ -43,7 +43,16 @@ const ProductCategory = () => {
                 </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-6">
+                {isLoading ? <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
+                    {[...Array(8)].map((_, index) => (
+                        <div key={index} className="w-11/13 mx-auto flex flex-col items-center bg-white shadow-md rounded-xl p-6">
+                            <div className="w-16 h-16 flex items-center justify-center rounded-full mb-4">
+                                <div className="skeleton w-19 h-16 rounded-full"></div>
+                            </div>
+                            <div className="skeleton h-4 w-16 rounded"></div>
+                        </div>
+                    ))}
+                </div> : <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-6">
                     {categories?.map((cat, index) => (
                         <Link key={index} to={`/category-product/${cat?.name}`}>
                             <div className="flex flex-col items-center bg-white shadow-md rounded-xl p-6 cursor-pointer 
@@ -56,7 +65,7 @@ const ProductCategory = () => {
                             </div>
                         </Link>
                     ))}
-                </div>
+                </div>}
             </div>
         </section>
     );
