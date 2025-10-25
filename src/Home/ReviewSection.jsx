@@ -3,11 +3,11 @@ import Review2 from '../assets/review2.png';
 import Review3 from '../assets/Offer3.jpg';
 import Review4 from '../assets/review4.png';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Added Pagination for better UX
+import { Navigation, Pagination, Autoplay } from "swiper/modules"; 
 import { Star } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination"; // Import pagination styles
+import "swiper/css/pagination"; 
 
 const ReviewSection = () => {
   const fallbackImages = [Review1, Review2, Review3, Review4];
@@ -17,7 +17,7 @@ const ReviewSection = () => {
     return fallbackImages[randomIndex];
   };
 
-  // NOTE: I'm updating the review data to use different names/roles for better demo realism.
+  
   const reviews = [
     {
       id: 1,
