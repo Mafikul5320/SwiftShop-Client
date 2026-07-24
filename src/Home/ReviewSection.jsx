@@ -3,11 +3,11 @@ import Review2 from '../assets/review2.png';
 import Review3 from '../assets/Offer3.jpg';
 import Review4 from '../assets/review4.png';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; 
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Star } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination"; 
+import "swiper/css/pagination";
 
 const ReviewSection = () => {
   const fallbackImages = [Review1, Review2, Review3, Review4];
@@ -17,7 +17,7 @@ const ReviewSection = () => {
     return fallbackImages[randomIndex];
   };
 
-  
+
   const reviews = [
     {
       id: 1,
@@ -121,9 +121,8 @@ const ReviewSection = () => {
                       {Array.from({ length: 5 }, (_, i) => (
                         <Star
                           key={i}
-                          className={`h-5 w-5 ${
-                            i < review.rating ? "text-amber-500" : "text-gray-300"
-                          } transition-colors duration-200`}
+                          className={`h-5 w-5 ${i < review.rating ? "text-amber-500" : "text-gray-300"
+                            } transition-colors duration-200`}
                           fill={i < review.rating ? "currentColor" : "none"}
                         />
                       ))}
@@ -137,7 +136,7 @@ const ReviewSection = () => {
                       <path d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.408 1.897c-3.235.636-6.142 2.766-7.85 5.676 2.458.747 4.549 2.128 5.761 4.225.295.513.197 1.135-.251 1.503-.449.368-1.127.358-1.567-.023-1.688-1.637-3.99-2.73-6.527-3.243-.454-.092-.883-.34-1.206-.677l-.609-.646zm-13 0c0-5.141 3.892-10.519 10-11.725l.408 1.897c-3.235.636-6.142 2.766-7.85 5.676 2.458.747 4.549 2.128 5.761 4.225.295.513.197 1.135-.251 1.503-.449.368-1.127.358-1.567-.023-1.688-1.637-3.99-2.73-6.527-3.243-.454-.092-.883-.34-1.206-.677l-.609-.646z" />
                     </svg>
                   </div>
-                  
+
                   <p className="text-lg italic text-gray-700 leading-relaxed mb-6">
                     {review.comment}
                   </p>
@@ -161,7 +160,7 @@ const ReviewSection = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        
+
         {/* Custom Navigation (optional: hides default Swiper buttons) */}
         <div className="swiper-button-prev-custom hidden xl:block absolute top-1/2 left-0 transform -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg cursor-pointer hover:bg-blue-100 transition">
           <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
