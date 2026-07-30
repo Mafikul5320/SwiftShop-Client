@@ -187,7 +187,7 @@ const Navber = () => {
               Contact
             </span>
           </Link>
-          <Link to={"/ComingSoon"}>
+          <Link to={"/limited-sale"}>
             <span className="text-yellow-200 font-bold">LIMITED SALE 🔥</span>
           </Link>
           {User?.role === "admin" && (
@@ -217,7 +217,7 @@ const Navber = () => {
                 Contact
               </span>
             </Link>
-            <Link to={"/ComingSoon"}>
+            <Link to={"/limited-sale"}>
               <span className="cursor-pointer hover:text-yellow-200">
                 LIMITED SALE 🔥
               </span>

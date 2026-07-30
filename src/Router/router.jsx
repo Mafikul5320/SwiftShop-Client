@@ -18,6 +18,7 @@ import ComingSoon from "../Pages/ComingSoon";
 import AllProduct from "../Pages/AllProduct";
 import CategoryProduct from "../Pages/CategoryProduct";
 import FavoriteItems from "../Pages/FavoriteItems";
+import LimitedSale from "../Pages/LimitedSale";
 
 export const Router = createBrowserRouter([{
     path: "/",
@@ -67,6 +68,10 @@ export const Router = createBrowserRouter([{
         {
             path: "/favorite-items",
             Component: FavoriteItems
+        },
+        {
+            path: "/limited-sale",
+            Component: LimitedSale
         }
     ],
 },
